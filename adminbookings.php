@@ -197,34 +197,6 @@ $result = $stmt->get_result();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="admin.css">
     <script src="admin.js" defer></script>
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f5f5f5;
-            color: #333;
-        }
-
-        .modal-content {
-            background-color: white;
-            margin: 5% auto;
-            padding: 20px;
-            border-radius: 8px;
-            width: 80%;
-            max-width: 600px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-            position: relative;
-            max-height: 80vh;
-            overflow-y: auto; 
-        }
-    
-        .close-modal {
-            float: right;
-            font-size: 1.5em;
-            cursor: pointer;
-        }
-    </style>
 </head>
 <body>
     <div class="container">
@@ -272,7 +244,7 @@ $result = $stmt->get_result();
                                         $event_badge = '<span class="badge badge-wedding"> Wedding</span>';
                                         break;
                                     case 'art':
-                                        $event_badge = '<span class="badge badge-art"> Art Exhibition</span>';
+                                        $event_badge = '<span class="badge badge-art"> Exhibition</span>';
                                         break;
                                     case 'conference':
                                         $event_badge = '<span class="badge badge-conference"> Conference</span>';

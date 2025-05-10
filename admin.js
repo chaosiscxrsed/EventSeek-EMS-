@@ -80,3 +80,12 @@ window.addEventListener("click", function (event) {
         modal.style.display = "none";
     }
 });
+
+document.querySelectorAll('.description').forEach(desc => {
+            desc.addEventListener('click', function() {
+                const fullText = this.getAttribute('title');
+                if (fullText) {
+                    alert('Customer Feedback:\n\n' + fullText);
+                }
+            });
+        });

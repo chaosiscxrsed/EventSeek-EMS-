@@ -76,198 +76,10 @@ $result = $stmt->get_result();
     <title>Manage Ratings | EventSeek</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        :root {
-            --primary-color: #e0568d;
-            --secondary-color: #4CAF50;
-            --danger-color: #dc3545;
-            --warning-color: #ffc107;
-            --info-color: #17a2b8;
-        }
-        
-        body {
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f5f5f5;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        
-        h1 {
-            color: var(--primary-color);
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        
-        .alert {
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 4px;
-        }
-        
-        .alert-success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-        
-        .alert-danger {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        
-        th, td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        
-        th {
-            background-color: var(--primary-color);
-            color: white;
-            font-weight: 500;
-        }
-        
-        tr:hover {
-            background-color: #f9f9f9;
-        }
-        
-        .rating-stars {
-            color: var(--warning-color);
-            font-size: 1.2em;
-            white-space: nowrap;
-        }
-        
-        .badge {
-            display: inline-block;
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-size: 0.8em;
-            font-weight: 500;
-            color: white;
-        }
-        
-        .badge-wedding {
-            background-color: var(--primary-color);
-        }
-        
-        .badge-art {
-            background-color: var(--info-color);
-        }
-        
-        .badge-conference {
-            background-color: var(--secondary-color);
-        }
-        
-        .btn {
-            padding: 6px 12px;
-            border-radius: 4px;
-            font-size: 0.9em;
-            cursor: pointer;
-            transition: all 0.2s;
-            border: none;
-        }
-        
-        .btn-danger {
-            background-color: var(--danger-color);
-            color: white;
-        }
-        
-        .btn-danger:hover {
-            background-color: #c82333;
-        }
-        
-        .pagination {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-        }
-        
-        .pagination a {
-            color: var(--primary-color);
-            padding: 8px 16px;
-            text-decoration: none;
-            border: 1px solid #ddd;
-            margin: 0 4px;
-            border-radius: 4px;
-        }
-        
-        .pagination a.active {
-            background-color: var(--primary-color);
-            color: white;
-            border: 1px solid var(--primary-color);
-        }
-        
-        .pagination a:hover:not(.active) {
-            background-color: #f1f1f1;
-        }
-        
-        .back-btn {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: var(--secondary-color);
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: 500;
-            margin-top: 20px;
-            transition: background-color 0.3s;
-        }
-        
-        .back-btn:hover {
-            background-color: #45a049;
-        }
-        
-        .description {
-            max-width: 300px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);
-        }
-        
-        .modal-content {
-            background-color: white;
-            margin: 5% auto;
-            padding: 20px;
-            border-radius: 8px;
-            width: 80%;
-            max-width: 600px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-        }
-        
-        .close-modal {
-            float: right;
-            font-size: 1.5em;
-            cursor: pointer;
-        }
-    </style>
+    <link rel="stylesheet" href="admin.css">
+    <script src="admin.js" defer></script>
 </head>
+
 <body>
     <div class="container">
         <h1> Manage Customer Ratings</h1>
@@ -305,7 +117,7 @@ $result = $stmt->get_result();
                                 $event_badge = '<span class="badge badge-wedding">Wedding</span>';
                                 break;
                             case 'art':
-                                $event_badge = '<span class="badge badge-art">Art Exhibition</span>';
+                                $event_badge = '<span class="badge badge-art">Exhibition</span>';
                                 break;
                             case 'conference':
                                 $event_badge = '<span class="badge badge-conference">Conference</span>';
@@ -372,17 +184,6 @@ $result = $stmt->get_result();
             <a href="admindb.php" class="back-btn">Back to Dashboard</a>
         </div>
     </div>
-
-    <script>
-        document.querySelectorAll('.description').forEach(desc => {
-            desc.addEventListener('click', function() {
-                const fullText = this.getAttribute('title');
-                if (fullText) {
-                    alert('Customer Feedback:\n\n' + fullText);
-                }
-            });
-        });
-    </script>
 </body>
 </html>
 
