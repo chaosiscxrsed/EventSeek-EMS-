@@ -1,0 +1,556 @@
+/* ems.css */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: url('wedding.jpg') center/cover no-repeat fixed;
+    color: #e0568d;
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.header-nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background: rgba(118, 73, 105, 0.8);
+}
+
+header {
+    color: #fefefe;
+    margin: 0;
+}
+
+header:hover {
+    color: #e6b3bb;
+    transition: color 0.3s, transform 0.3s;
+    transform-origin: center center;
+}
+
+.logo-heading {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo {
+    width: 50px;
+    height: auto;
+}
+
+nav {
+    padding: 10px;
+    display: flex;
+    justify-content: flex-end;
+    width: auto;
+    transition: none;
+}
+
+nav a {
+    color: #fcfdfd;
+    margin: 0 15px;
+    font-size: 1.2em;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: #e6b3bb;
+    background-color: transparent;
+}
+
+nav button {
+    background: none;
+    border: none;
+    color: #fcfdfd;
+    font-size: 1.2em;
+    margin: 0 15px;
+    cursor: pointer;
+    transition: color 0.3s, background-color 0.3s;
+}
+
+nav button:hover {
+    color: #e6b3bb;
+    background-color: transparent;
+}
+
+.dashboard {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 2000;
+    top: 0;
+    right: 0;
+    background-color: rgba(51, 51, 51, 0.95);
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+.dashboard h2 {
+    color: #fff;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.dashboard ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.dashboard ul li {
+    padding: 10px 20px;
+    text-align: center;
+}
+
+.dashboard ul li a {
+    color: #e0568d;
+    font-size: 1.5em;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.dashboard ul li a:hover {
+    color: #1e90ff;
+}
+
+.dashboard-btn {
+    background-color: transparent;
+    border: none;
+    color: #fcfdfd;
+    font-size: 1.2em;
+    margin-left: 15px;
+    cursor: pointer;
+    transition: color 0.3s;
+    font-family: Poppins;
+}
+
+.dashboard-btn:hover {
+    color: #e6b3bb;
+}
+
+.close-btn {
+    position: absolute;
+    top: 20px;
+    left: 25px;
+    font-size: 2em;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+
+.hero {
+    margin: 10px;
+    padding: 100px 20px;
+    text-align: center;
+    position: relative;
+}
+
+.hero h1 {
+    margin: 0;
+    font-size: 3em;
+}
+
+.hero p {
+    font-size: 1.5em;
+}
+
+.hero button {
+    background-color: #3740a0;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    cursor: pointer;
+    font-family: Poppins;
+    transition: background-color 0.3s, transform 0.3s;
+    transform-origin: center center;
+    margin-top: 20px;
+}
+
+.hero button:hover {
+    background-color: #0b0b0b;
+    font-family: Gaegu;
+    transform: scale(1.05);
+    font-size: 1.4em;
+
+}
+
+.section button {
+    background-color: #3740a0;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    cursor: pointer;
+    font-family: Poppins;
+    transition: background-color 0.3s, transform 0.3s;
+    transform-origin: center center;
+    margin-top: 20px;
+}
+
+.section button:hover {
+    background-color: #0b0b0b;
+    font-family: Gaegu;
+    transform: scale(1.05);
+    font-size: 1.4em;
+
+}
+
+.container {
+    margin: 30px;
+    display: flex;
+    justify-content: space-around;
+    padding: 50px 20px;
+    background-color: #fff;
+}
+
+.card {
+    width: 300px;
+    overflow: hidden;
+    border-radius: 8px;
+    margin: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    background-color: #fff;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px 8px 0 0;
+    transition: transform 0.3s ease;
+}
+
+.card img:hover {
+    transform: scale(1.05);
+    z-index: 1;
+}
+
+
+.card h3 {
+    font-size: 1.5em;
+    margin: 20px 0 10px;
+    color: #e0568d;
+    margin: 10px 0 5px;
+}
+
+.card p {
+    font-size: 1em;
+    color: #0b0b0b;
+    margin: 10px 0;
+}
+
+
+.card-content {
+    padding: 15px;
+}
+
+.card-content p {
+    color: #333;
+    margin: 8px 0;
+    font-size: 1em;
+}
+
+.line {
+    margin-top: 20px;
+    border-top: 3px solid #3d56f0;
+    width: 50px;
+    display: inline-block;
+}
+
+footer {
+    margin-top: 50px;
+    background-color: rgba(51, 51, 51, 0.8);
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    position: static;
+    width: 100%;
+    bottom: 0;
+}
+
+.footer {
+    background: #2e2e2e;
+    color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-around;
+    margin-top: auto;
+}
+
+.footer-column {
+    max-width: 300px;
+    text-align: left;
+}
+
+.footer-column h3 {
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.footer-column p {
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+.footer-column a {
+    color: #1e90ff;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.footer-column a:hover {
+    text-decoration: underline;
+}
+
+.footer-column ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-column ul li {
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+}
+
+.section {
+    margin: 50px;
+    padding: 50px 20px;
+    background-color: rgba(118, 73, 105, 0.8);
+    text-align: center;
+    margin-bottom: 100px;
+}
+
+.section h2 {
+    color: #fcfdfd;
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+.section a {
+    color: #e0568d
+}
+
+.section p {
+    color: #333;
+}
+
+.section button {
+    width: 10%;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 6px;
+    background-color: #3740a0;
+    color: white;
+}
+
+.section button:hover {
+    background-color: #0b0b0b;
+}
+
+.form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 30px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form input,
+.form button {
+    width: 100%;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 6px;
+}
+
+.form button {
+    background-color: #3740a0;
+    color: white;
+}
+
+.form button:hover {
+    background-color: #0b0b0b;
+}
+
+.error-message {
+    color: red;
+    font-weight: bold;
+}
+
+.popup-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.popup-pane {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    width: 300px;
+    text-align: center;
+    z-index: 1001;
+}
+
+.popup-pane h3 {
+    margin-top: 0;
+    font-size: 1.5rem;
+}
+
+.popup-pane p {
+    margin: 10px 0;
+    font-size: 1rem;
+}
+
+.popup-pane button {
+    background: #3740a0;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-family: Poppins;
+    transition: background-color 0.3s, transform 0.3s;
+    transform-origin: center center;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.popup-pane button:hover {
+    background: #0a0a0a;
+    font-family: Gaegu;
+}
+
+.sub {
+    font-family: Poppins;
+    text-align: center;
+    position: relative;
+}
+
+.sub button {
+    background-color: #3740a0;
+}
+
+.sub button:hover {
+    font-family: Gaegu;
+}
+
+.form .rem {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    padding-left: 0;
+}
+
+.form .rem input[type="checkbox"] {
+    margin-right: 10px;
+    width: 18px;
+    height: 15px;
+}
+
+.form .rem label {
+    font-size: 14px;
+    color: #555;
+}
+
+.form .rem input[type="checkbox"]:checked {
+    background-color: #3740a0;
+}
+
+.form p {
+    text-align: center;
+    font-size: 14px;
+    color: #555;
+}
+
+.form a {
+    color: #e0568d;
+    text-decoration: none;
+}
+
+.form a:hover {
+    text-decoration: underline;
+}
+
+.scroll-container {
+    display: flex;
+    overflow-x: auto;
+    padding: 10px 0;
+    scroll-behavior: smooth;
+    gap: 20px;
+}
+
+.select-box {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    transform: scale(1.5);
+}
+
+
+#selected-items {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 20px 0;
+}
+
+.date-picker {
+    margin: 20px 0;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.date-picker label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #e0568d;
+}
+
+.date-picker input[type="date"] {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: 'Poppins', sans-serif;
+    width: 100%;
+    max-width: 300px;
+}
+
+.success-message {
+    color: white;
+    margin-bottom: 15px;
+}
+
+.error-message {
+    color: red;
+    margin-bottom: 15px;
+}

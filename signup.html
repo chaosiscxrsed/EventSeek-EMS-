@@ -1,0 +1,133 @@
+<!-- signup.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventSeek signup</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gaegu&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="ems.css">
+    <script src="ems.js" defer></script>
+    <style>
+        .section a{
+            transition: color 0.3s;
+        }
+        .section a:hover {
+            color: #333;
+            background-color: transparent;
+        }
+    </style>
+</head>
+<body>
+    <div class="header-nav-container">
+        <header>
+            <div class="logo-heading">
+                <a href="EMShome.html" style="color: inherit;"><img src="logo.png" alt="EventSeek Logo" class="logo"></a>
+                <h1><a href="EMShome.html" style="text-decoration: none; color: #fcfdfd;">EventSeek</a></h1>
+            </div>
+        </header>
+        
+        <nav>
+            <a href="#contact" id="contact-link">Contact</a>
+            <a href="#about" id="about-link">About Us</a>
+            <button id="open-dashboard" class="dashboard-btn">☰</button>
+        </nav>
+    </div>
+    
+    <div id="dashboard" class="dashboard">
+        <button id="close-dashboard" class="close-btn">&times;</button>
+        <ul>
+            <li><a href="EMShome.html">Home</a></li>
+            <li><a href="loginht.php" target="_blank">Log In</a></li>
+            <li><a href="signup.html" target="_blank">Sign Up</a></li>
+        </ul>
+    </div>
+
+    <div class="popup-overlay" id="popup-overlay-contact">
+        <div class="popup-pane">
+            <h3>Contact Us</h3>W
+            <p>Email: livelyevents@gmail.com</p>
+            <p>Phone: 9812345678</p>
+            <button class="close-popup">Close</button>
+        </div>
+    </div>
+    <div class="popup-overlay" id="popup-overlay-about">
+        <div class="popup-pane">
+            <h3>About Us</h3>
+            <p>Welcome to EventSeek! We specialize in creating unforgettable events, tailored to your needs.</p>
+            <p>Our mission is to turn your dreams into reality with seamless planning and execution.</p>
+            <button class="close-popup">Close</button>
+        </div>
+    </div>
+
+    <div class="hero">
+        <h1>Make your events come alive</h1>
+        <p> </p>
+        <button onclick="document.getElementById('signup').scrollIntoView({ behavior: 'smooth' })">
+           Book Now
+        </button>
+    </div>
+
+
+    <div class="section" id="signup">
+        <h2>Sign Up to Book Events</h2>
+        <div class="form">
+            <form action="signup.php" method="POST">
+                <input type="text" name="name" placeholder="Full Name" required pattern="[A-Za-z\s]+" title="Name must only contain letters and spaces">
+                <input type="email" name="email" placeholder="Email Address" required>
+                <input type="tel" name="contact" placeholder="Contact Number" required pattern="\d{10}" title="Please enter a valid 10-digit phone number">
+                <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                required pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}"
+                title="Password must be at least 8 characters long, include an uppercase letter, a lowercase letter, a number, and a special character">
+            <div class="sub">
+                <button type="submit">Sign Up</button>
+            </div>
+            </form>
+            <div class="sub">
+                <p style="margin: 10px">Already have an account? <a href="loginht.php">Log In</a></p>
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="footer-column">
+            <h3>About Us</h3>
+            <p>Welcome to EventSeek! We specialize in creating unforgettable events, tailored to your needs.</p>
+            <a href="https://www.instagram.com/livelyevents/" target="_blank">More About Us</a> <!-- Open in new tab -->
+        </div>
+
+        <div class="footer-column">
+            <h3>Get In Touch</h3>
+            <ul>
+                <li>livelyevents@gmail.com</li>
+                <li>9812345678</li>
+            </ul>
+            <a href="https://www.instagram.com/livelyevents/" target="_blank">More Ways to Get In Touch</a> 
+        </div>
+
+        <div class="footer-column">
+            <h3>Drop By</h3>
+            <ul>
+                <li>Old Baneshwor, Kathmandu</li>
+                <li>-446600</li>
+            </ul>
+            <a href="https://maps.app.goo.gl/zQZrZFiRTHoZRPTy7" target="_blank">Direction and Maps</a>
+        </div>
+    </footer>
+    
+</body>
+
+<script>
+    document.querySelector('form').addEventListener('submit', function (event) {
+        if (!this.checkValidity()) {
+            event.preventDefault();
+            alert('Please fill out the form correctly.');
+        } else {
+            alert('Form is valid and will be submitted.');
+        }
+    });
+</script>
+</html>
