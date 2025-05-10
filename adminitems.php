@@ -173,6 +173,7 @@ if (isset($_POST['update_item'])) {
     <title>Admin Dashboard - Manage Items</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="admin.css">
+    <script src="admin.js" defer></script>
 </head>
 <body>
 
@@ -185,20 +186,7 @@ if (isset($_POST['update_item'])) {
     </div>
 <?php endif; ?>
 <div class="section">
-    <a href="admindb.php" style="
-        text-align: left
-        display: inline-block;
-        padding: 10px 20px;
-        background-color: #4CAF50;
-        color: white;
-        text-decoration: none;
-        border-radius: 5px;
-        font-weight: bold;
-        transition: background-color 0.3s;
-        margin: 20px;
-        " onmouseover="this.style.backgroundColor='#45a049'" onmouseout="this.style.backgroundColor='#4CAF50'">
-        Back to Admin Dashboard
-    </a>
+    <a href="admindb.php" class="back-btn"> Back to Dashboard</a>
     <a href="adminlogout.php" style="
         display: inline-block;
         float: right;
@@ -209,8 +197,8 @@ if (isset($_POST['update_item'])) {
         border-radius: 5px;
         font-weight: bold;
         transition: background-color 0.3s;
-        margin: 20px;
-        " onmouseover="this.style.backgroundColor='#d32f2f'" onmouseout="this.style.backgroundColor='#f44336'">
+        margin:20px;
+        " onmouseover="this.style.backgroundColor='#45a049'" onmouseout="this.style.backgroundColor='#4CAF50'">
         Logout
     </a>
     <h2>Upload New Item</h2>
