@@ -1,3 +1,4 @@
+<!-- adminbookings.php -->
 <?php
 session_start();
 if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
@@ -197,6 +198,54 @@ $result = $stmt->get_result();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="admin.css">
     <script src="admin.js" defer></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: white;
+            color: #333;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+       /* Modal Content */
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 20px;
+            border-radius: 8px;
+            width: 80%;  /* Control the width here */
+            max-width: 900px; /* Maximum width to avoid taking full screen */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1001;  /* Ensure it stays above other content */
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+            z-index: 1000;
+            overflow: auto;
+            padding: 20px;
+        }
+
+        .close-btn {
+            cursor: pointer;
+            color: #333;
+            font-size: 24px;
+            font-weight: bold;
+            background: transparent;
+            border: none;
+            padding: 5px;
+        }
+
+    </style>
+
 </head>
 <body>
     <div class="container">

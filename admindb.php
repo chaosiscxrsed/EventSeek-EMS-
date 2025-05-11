@@ -89,6 +89,15 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
         </a>
     </div>
 
+     <div class="card">
+        <a href="employee.php">
+            <img src="users.jpg" alt="Manage Users">
+        </a>
+        <a href="employee.php">
+            <button>Manage Employees</button>
+        </a>
+    </div>
+
 </div>
 
 <div style="text-align: right; margin-top: 20px;">

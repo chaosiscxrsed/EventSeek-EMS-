@@ -181,7 +181,7 @@ $result = $stmt->get_result();
         <?php endif; ?>
         
         <div style="text-align: center;">
-            <a href="admindb.php" class="back-btn">Back to Dashboard</a>
+            <a href="adminbookings.php" class="back-btn">Back to Bookings</a>
         </div>
     </div>
 </body>
