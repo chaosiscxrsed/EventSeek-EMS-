@@ -436,7 +436,6 @@ footer {
     color: white;
     border: none;
     padding: 10px 15px;
-    border-radius: 5px;
     font-family: Poppins;
     transition: background-color 0.3s, transform 0.3s;
     transform-origin: center center;
@@ -447,6 +446,8 @@ footer {
 .popup-pane button:hover {
     background: #0a0a0a;
     font-family: Gaegu;
+    transform: scale(1.05);
+    font-size: 1.058em;
 }
 
 .sub {
