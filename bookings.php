@@ -168,6 +168,7 @@ $result = $stmt->get_result();
         }
 
         .booking-status {
+            text-transform: capitalize; 
             padding: 6px 12px;
             border-radius: 20px;
             font-weight: 600;
@@ -230,6 +231,7 @@ $result = $stmt->get_result();
         }
 
         .btn-cancel {
+            font-family: 'Poppins', sans-serif;
             background: #ff4757;
             color: white;
             border: none;
@@ -237,17 +239,31 @@ $result = $stmt->get_result();
             border-radius: 6px;
             cursor: pointer;
             transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9em;
+            text-decoration: none;
         }
 
         .btn-cancel:hover {
-            background: #ff6b81;
+            background:rgb(205, 78, 97);
             transform: translateY(-2px);
         }
 
-        .btn-cancel:disabled {
-            background: #6c757d;
-            cursor: not-allowed;
-            transform: none;
+        .booking-actions {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .booking-actions > * {
+            flex: 1;
+            min-width: fit-content;
+            text-align: center;
         }
 
         .btn-receipt {
@@ -471,17 +487,23 @@ $result = $stmt->get_result();
                             <span class="detail-value"><strong>Rs. <?php echo number_format($row['total_price'], 2); ?></strong></span>
                         </div>
                     </div>
+
+                    
                     
                     <div class="booking-actions">
-                        <a class="btn-receipt"> 20% of payment will not be refunded afer cancellation</a>
-                        
                         <?php if ($status === 'Pending'|| $status==='Confirmed'|| $status === 'pending'|| $status==='confirmed'): ?>
+                            <a class="btn-receipt"> 20% of payment will not be refunded if cancelled</a>
+                            <?php if ($status === 'Pending' || $status === 'pending'): ?>
+                            <a href="https://esewa.com.np/#/home" class="btn-pay">
+                             Pay with eSewa
+                            </a>
+                            <?php endif; ?>
                             <form method="POST" action="cancelbooking.php" onsubmit="return confirm('20% of payment will not be refunded. Are you sure you want to cancel this booking?');">
                                 <input type="hidden" name="booking_id" value="<?php echo $row['booking_id']; ?>">
                                 <input type="hidden" name="event_type" value="<?php echo $row['event_type']; ?>">
                                 <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                                 <button type="submit" name="cancel_booking" class="btn-cancel">
-                                <i class="fas fa-times"></i> Cancel Booking
+                                 <a>Cancel Booking</a>
                                 </button>
                             </form>
                         <?php endif; ?>

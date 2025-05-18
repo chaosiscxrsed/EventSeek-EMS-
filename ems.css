@@ -555,3 +555,22 @@ footer {
     color: red;
     margin-bottom: 15px;
 }
+
+.btn-pay {
+    background: #55d142;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-pay:hover {
+    background: #4bb739;
+    transform: translateY(-2px);
+}
+
