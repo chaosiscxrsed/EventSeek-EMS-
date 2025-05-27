@@ -392,8 +392,9 @@ footer {
 }
 
 .error-message {
-    color: red;
+    color: red !important;
     font-weight: bold;
+    margin-bottom: 15px;
 }
 
 .popup-overlay {
@@ -549,11 +550,6 @@ footer {
 
 .success-message {
     color: white;
-    margin-bottom: 15px;
-}
-
-.error-message {
-    color: red;
     margin-bottom: 15px;
 }
 
