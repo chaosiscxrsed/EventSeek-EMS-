@@ -1,17 +1,43 @@
-<!-- homepageht.php -->
+<!-- payment.php -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EventSeek Dashboard</title>
+    <title>Payment</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Gaegu&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="ems.css">
     <script src="ems.js" defer></script>
+    <style>
+        .btn-back {
+            background: #55d142 !important;
+            color: white !important;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none !important;
+        }
+        .btn-back:hover {
+            background: #4bb739;
+            transform: translateY(-2px);
+        }
+
+
+
+        .info p{ 
+            margin: 10px 0;
+            color: Gray;;
+        }
+    </style>
 </head>
 <body>
-    <?php
+     <?php
         session_start();
         if (!isset($_SESSION['user_name'])) {
             header("Location: loginht.php");
@@ -22,10 +48,11 @@
     <div class="header-nav-container">
         <header>
             <div class="logo-heading">
-                <a href="EMShome.html" style="color: inherit;"><img src="logo.png" alt="EventSeek Logo" class="logo"></a>
-                <h1><a href="EMShome.html" style= "color: #fcfdfd;">EventSeek</a></h1>
+                <a href="EMShome.html"><img src="logo.png" alt="EventSeek Logo" class="logo"></a>
+                <h1><a href="EMShome.html" style=" color: #fcfdfd;">EventSeek</a></h1>
             </div>
         </header>
+        
         <nav>
             <a href="#contact" id="contact-link">Contact</a>
             <a href="#about" id="about-link">About Us</a>
@@ -36,12 +63,12 @@
     <div id="dashboard" class="dashboard">
         <button id="close-dashboard" class="close-btn">&times;</button>
         <ul>
-            <li><a href="#profile">Profile</a></li>
-            <li><a href="bookings.php">Event History</a></li>
-            <li><a href="logout.php" class="logout">Logout</a></li>
+            <li><a href="EMShome.html">Home</a></li>
+            <li><a href="loginht.php" target="_blank">Log In</a></li>
+            <li><a href="signup.html" target="_blank">Sign Up</a></li>
         </ul>
     </div>
-
+    
     <div class="popup-overlay" id="popup-overlay-contact">
         <div class="popup-pane">
             <h3>Contact Us</h3>
@@ -59,45 +86,23 @@
         </div>
     </div>
 
-    <section class="hero">
-        <h1>Welcome, <?php echo $user_name; ?>!</h1>
-        <p>Let's Get Started</p>
-    </section>
-
-    <div class="section">
-        <h2>Choose an Event</h2>
-        <div class="container">
-            <div class="card">
-            <a href="decoration.php"><img src="weddd.jpg" alt="Wedding event" style="width:100%; height:200px; object-fit:cover;"></a>
-                <div class="card-content">
-                    <a href="decoration.php"><h3>Wedding</h3></a>
-                    <div class="line"></div>
+    <div class="section" id="signup">
+        <h2>Pay via E-sewa</h2>
+            <div class="form">
+                <div class="card">
+                <img src="qr.jpg" alt="QR Code">
                 </div>
-            </div>
-            <div class="card">
-            <a href="artex.php"><img src="artt.jpeg" alt="Art exhibition" style="width:100%; height:200px; object-fit:cover;"></a>
-                <div class="card-content">
-                    <a href="decoration.php"><h3>Art Exhibition</h3></a>
-                    <div class="line"></div>
+                <div class="info">
+                <p>Scan the QR code to make your payment.</p>
+                <p style="font-weight: bold">Please mention your name and booking ID in the remarks section of the payment.</p>
+                <p>For more inquiries, contact us at 9841234567 or email us at eventseek@gmail.com</p>
                 </div>
-            </div>
-            <div class="card">
-            <a href="conference.php"><img src="conf.jpg" alt="Conference meeting" style="width:100%; height:200px; object-fit:cover;"></a>
-                <div class="card-content">
-                    <a href="conference.php"><h3>Conference</h3></a>
-                    <div class="line"></div>
-                </div>
+                <a href="bookings.php" class="btn-back">
+                 Go Back</a>
             </div>
         </div>
     </div>
-   
-    <section id="profile" class="section">
-        <h2>My Profile</h2>
-        <p>Name: <?php echo $user_name; ?></p>
-        <p>Email: <?php echo htmlspecialchars($_SESSION['user_email']); ?></p>
-        <button onclick="window.location.href='editprofile.php'">Edit Profile</button>
-    </section>
-
+    
     <footer class="footer">
         <div class="footer-column">
             <h3>About Us</h3>

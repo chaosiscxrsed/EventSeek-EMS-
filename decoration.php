@@ -163,7 +163,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_selection']))
     <div class="popup-overlay" id="popup-overlay-contact">
         <div class="popup-pane">
             <h3>Contact Us</h3>
-            <p>Email: livelyevents@gmail.com</p>
+            <p>Email: eventseek@gmail.com</p>
             <p>Phone: 9812345678</p>
             <button class="close-popup">Close</button>
         </div>
@@ -322,16 +322,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_selection']))
         <div class="footer-column">
             <h3>About Us</h3>
             <p>Welcome to EventSeek! We specialize in creating unforgettable events, tailored to your needs.</p>
-            <a href="https://www.instagram.com/livelyevents/" target="_blank" style="text-decoration: none;">More About Us</a>
+            <a href="https://www.instagram.com/eventseek/" target="_blank" style="text-decoration: none;">More About Us</a>
         </div>
 
         <div class="footer-column">
             <h3>Get In Touch</h3>
             <ul>
-                <li>livelyevents@gmail.com</li>
+                <li>eventseek@gmail.com</li>
                  <li>9812345678</li>
             </ul>
-            <a href="https://www.instagram.com/livelyevents/" target="_blank" style="text-decoration: none;">More Ways to Get In Touch</a>
+            <a href="https://www.instagram.com/eventseek/" target="_blank" style="text-decoration: none;">More Ways to Get In Touch</a>
         </div>
 
         <div class="footer-column">
