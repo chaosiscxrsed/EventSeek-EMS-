@@ -1,6 +1,9 @@
 <!-- adminbookings.php -->
 <?php
 session_start();
+if (!isset($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
 if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
     header("Location: adminlogin.php");
     exit();
@@ -12,6 +15,9 @@ if ($conn->connect_error) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if ($_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+    die("CSRF token validation failed!");
+    }
     if (isset($_POST['update_status'])) {
         $booking_id = intval($_POST['booking_id']);
         $event_type = $_POST['event_type'];
@@ -320,6 +326,7 @@ $result = $stmt->get_result();
                                     <form method="POST" action="adminbookings.php" style="display: flex; align-items: center; gap: 5px;">
                                         <input type="hidden" name="booking_id" value="<?php echo $row['booking_id']; ?>">
                                         <input type="hidden" name="event_type" value="<?php echo $row['event_type']; ?>">
+                                        <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                                         <select name="status" onchange="this.form.submit()">
                                             <option value="pending" <?php echo $status === 'pending' ? 'selected' : ''; ?>>Pending</option>
                                             <option value="confirmed" <?php echo $status === 'confirmed' ? 'selected' : ''; ?>>Confirmed</option>
@@ -349,6 +356,7 @@ $result = $stmt->get_result();
                                     <form method="POST" action="adminbookings.php" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this booking?');">
                                         <input type="hidden" name="booking_id" value="<?php echo $row['booking_id']; ?>">
                                         <input type="hidden" name="event_type" value="<?php echo $row['event_type']; ?>">
+                                        <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                                         <button type="submit" name="delete_booking" class="btn btn-danger btn-sm">
                                             Delete
                                         </button>
@@ -407,6 +415,52 @@ $result = $stmt->get_result();
         </div>
     </div>
 </body>
+<script>
+document.querySelectorAll('.update-form').forEach(form => {
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        formData.append('csrf_token', CSRF_TOKEN);
+        
+        fetch('adminitems.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.text())
+        .then(data => {
+            console.log('Success:', data);
+            alert('Updated successfully!');
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Update failed');
+        });
+    });
+});
+
+document.querySelectorAll('.delete-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        if (!confirm('Are you sure?')) return;
+        
+        const id = this.dataset.id;
+        const type = this.dataset.type;
+
+        fetch(`adminitems.php?delete=${id}&type=${type}`, {
+            method: 'GET',
+            headers: {
+                'X-CSRF-Token': CSRF_TOKEN
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                this.closest('tr').remove();
+                alert('Deleted successfully!');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    });
+});
+</script>
 </html>
 
 <?php

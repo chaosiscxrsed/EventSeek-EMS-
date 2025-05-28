@@ -496,6 +496,7 @@ footer {
 .form a {
     color: #e0568d;
     text-decoration: none;
+    margin: 10px 0;
 }
 
 .form a:hover {
@@ -561,9 +562,7 @@ footer {
     border-radius: 6px;
     cursor: pointer;
     transition: all 0.2s;
-    display: inline-flex;
     align-items: center;
-    gap: 8px;
 }
 
 .btn-pay:hover {

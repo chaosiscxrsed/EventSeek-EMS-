@@ -124,12 +124,22 @@ img:hover {
     padding: 6px 12px;
     border: none;
     border-radius: 6px;
-    margin: 2px;
+    margin: 10px;
+    transition: background-color 0.3s;
     cursor: pointer;
 }
 
 .actions button.delete {
-    background: #f44336;
+    display: inline-block;
+    padding: 6px 12px;
+    background-color: #f44336;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 10px;
 }
 
 form {

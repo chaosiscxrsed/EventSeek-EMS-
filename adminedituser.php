@@ -1,5 +1,9 @@
+<!--adminedituser.php-->
 <?php
 session_start();
+if (!isset($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
 if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
     header("Location: adminlogin.php");
     exit();
@@ -30,6 +34,10 @@ if (isset($_GET['id'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if ($_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+    die("CSRF token validation failed!");
+    }
+
     $name = $_POST['fullname'];
     $email = $_POST['email'];
     $contact = $_POST['contact'];
@@ -57,41 +65,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
 
-<h1>Edit User</h1>
+    <h1>Edit User</h1>
 
-<?php if (isset($message)): ?>
-    <div class="message"><?= $message; ?></div>
-<?php endif; ?>
+    <?php if (isset($message)): ?>
+        <div class="message"><?= $message; ?></div>
+    <?php endif; ?>
 
-<div class="section">
-    <form method="POST" action="edit_user.php?u_id=<?= $user['u_id']; ?>">
-        <label for="name">Name:</label>
-        <input type="text" name="fullname" id="name" value="<?= htmlspecialchars($user['fullname']); ?>" required>
+    <div class="section">
+        <form method="POST" action="edit_user.php?u_id=<?= $user['u_id']; ?>">
+            <label for="name">Name:</label>
+            <input type="text" name="fullname" id="name" value="<?= htmlspecialchars($user['fullname']); ?>" required>
 
-        <label for="email">Email:</label>
-        <input type="email" name="email" id="email" value="<?= htmlspecialchars($user['email']); ?>" required>
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email" value="<?= htmlspecialchars($user['email']); ?>" required>
 
-        <label for="contact">Contact:</label>
-        <input type="text" name="contact" id="contact" value="<?= htmlspecialchars($user['contact']); ?>" required>
+            <label for="contact">Contact:</label>
+            <input type="text" name="contact" id="contact" value="<?= htmlspecialchars($user['contact']); ?>" required>
+            <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>">
+            <button type="submit">Update User</button>
+        </form>
+    </div>
 
-        <button type="submit">Update User</button>
-    </form>
-</div>
-
-<div style="text-align: right; margin-top: 20px;">
-    <a href="adminusers.php" style="
-        display: inline-block;
-        padding: 10px 20px;
-        background-color: #4CAF50;
-        color: white;
-        text-decoration: none;
-        border-radius: 5px;
-        font-weight: bold;
-        transition: background-color 0.3s;
-    " onmouseover="this.style.backgroundColor='#45a049'" onmouseout="this.style.backgroundColor='#4CAF50'">
-        Back to User List
-    </a>
-</div>
+    <div style="text-align: right; margin-top: 20px;">
+        <a href="adminusers.php" style="
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        " onmouseover="this.style.backgroundColor='#45a049'" onmouseout="this.style.backgroundColor='#4CAF50'">
+            Back to User List
+        </a>
+    </div>
 
 </body>
 </html>

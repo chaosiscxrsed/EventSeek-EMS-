@@ -65,6 +65,7 @@ $users = $conn->query("SELECT * FROM employee");
         border-radius: 5px;
         font-weight: bold;
         transition: background-color 0.3s;
+        margin-right: 20px;
     " onmouseover="this.style.backgroundColor='#45a049'" onmouseout="this.style.backgroundColor='#4CAF50'">
         Back to Admin Dashboard
     </a>

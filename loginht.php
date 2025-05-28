@@ -83,9 +83,8 @@
                 <div class="sub">
                     <button type="submit">Login</button>
                 </div>
-                
-                <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
                 <p><a href="forgotps.php">Forgot Password?</a></p>
+                <p>Don't have an account? <a href="signup.html">Sign Up</a></p> 
             </form>
         </div>
     </div>
