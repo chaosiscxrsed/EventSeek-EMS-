@@ -235,14 +235,12 @@ $result = $stmt->get_result();
             background: #ff4757;
             color: white;
             border: none;
-            padding: 8px 16px;
+            padding: 8px 12px;
             border-radius: 6px;
             cursor: pointer;
             transition: all 0.2s;
-            display: inline-flex;
             align-items: center;
-            gap: 8px;
-            font-size: 0.9em;
+            font-size: 1em;
             text-decoration: none;
         }
 
