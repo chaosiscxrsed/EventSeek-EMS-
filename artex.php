@@ -316,7 +316,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_selection']))
 
             <button type="submit" name="confirm_selection" class="btn-confirm">Confirm Booking</button>
         </section>
-        
     </form>
     <footer class="footer">
         <div class="footer-column">

@@ -372,7 +372,7 @@ if (isset($_POST['update_item'])) {
     </div>
 
     <div class="section">
-        <h2>Lightings</h2>
+        <h2>Stage Decoration</h2>
         <table>
             <tr>
                 <th>ID</th>
