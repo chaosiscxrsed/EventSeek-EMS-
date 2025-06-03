@@ -96,6 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             border-radius: 5px;
             font-weight: bold;
             transition: background-color 0.3s;
+            margin-right: 20px;
         " onmouseover="this.style.backgroundColor='rgb(48, 130, 52)'" onmouseout="this.style.backgroundColor='#2e9c1d'">
             Back to User List
         </a>

@@ -55,9 +55,7 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
     </style>
 </head>
 <body>
-
 <h1>Welcome to the Admin Dashboard</h1>
-
 <div class="section">
     <h2>Select Management Option</h2>
     <div class="management-options">
