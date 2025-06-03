@@ -139,10 +139,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_selection']))
     <div class="header-nav-container">
         <header>
             <div class="logo-heading">
-                <a href="EMShome.html">
+                <a href="homepageht.php">
                     <img src="logo.png" alt="EventSeek Logo" class="logo">
                 </a>
-                <h1><a href="EMShome.html" style="color: #fcfdfd">EventSeek</a></h1>
+                <h1><a href="homepageht.php" style="color: #fcfdfd">EventSeek</a></h1>
             </div>
         </header>
             <nav>
