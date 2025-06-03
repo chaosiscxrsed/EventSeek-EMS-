@@ -199,8 +199,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_selection']))
                 <div class="card">
                     <img src="<?php echo htmlspecialchars($row['r_image']); ?>" alt="roomlight">
                     <div class="card-content">
-                        <p><?php echo htmlspecialchars($row['r_des']); ?></p>
-                        <p><strong>Rs. <?php echo number_format($row['r_price'], 2); ?></strong></p>
+                        <p><strong><?php echo htmlspecialchars($row['r_des']); ?></strong></p>
+                        <p style="color:#5a5a5c;">Rs. <?php echo number_format($row['r_price'], 2); ?></p>
                         <label>
                             <input type="radio" name="roomlight" value="<?php echo $row['r_id']; ?>"
                                 data-description="<?php echo htmlspecialchars($row['r_des']); ?>"
@@ -226,8 +226,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_selection']))
                 <div class="card">
                     <img src="<?php echo htmlspecialchars($row['p_image']); ?>" alt="prop">
                     <div class="card-content">
-                        <p><?php echo htmlspecialchars($row['p_des']); ?></p>
-                        <p><strong>Rs. <?php echo number_format($row['p_price'], 2); ?></strong></p>
+                        <p><strong><?php echo htmlspecialchars($row['p_des']); ?></strong></p>
+                        <p style="color:#5a5a5c;">Rs. <?php echo number_format($row['p_price'], 2); ?></p>
                         <label>
                             <input type="radio" name="prop" value="<?php echo $row['p_id']; ?>"
                                 data-description="<?php echo htmlspecialchars($row['p_des']); ?>"
@@ -253,8 +253,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_selection']))
                 <div class="card">
                     <img src="<?php echo htmlspecialchars($row['c_image']); ?>" alt="Cardboard">
                     <div class="card-content">
-                        <p><?php echo htmlspecialchars($row['c_des']); ?></p>
-                        <p><strong>Rs. <?php echo number_format($row['c_price'], 2); ?></strong></p>
+                        <p><strong><?php echo htmlspecialchars($row['c_des']); ?></strong></p>
+                        <p style="color:#5a5a5c;">Rs. <?php echo number_format($row['c_price'], 2); ?></p>
                         <label>
                             <input type="radio" name="cardboard" value="<?php echo $row['c_id']; ?>"
                                 data-description="<?php echo htmlspecialchars($row['c_des']); ?>"
@@ -280,8 +280,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_selection']))
                 <div class="card">
                     <img src="<?php echo htmlspecialchars($row['v_image']); ?>" alt="Venue">
                     <div class="card-content">
-                        <p><?php echo htmlspecialchars($row['v_des']); ?></p>
-                        <p><strong>Rs. <?php echo number_format($row['v_price'], 2); ?></strong></p>
+                        <p><strong><?php echo htmlspecialchars($row['v_des']); ?></strong></p>
+                        <p style="color:#5a5a5c;">Rs. <?php echo number_format($row['v_price'], 2); ?></p>
                         <label>
                             <input type="radio" name="venue" value="<?php echo $row['v_id']; ?>"
                                 data-description="<?php echo htmlspecialchars($row['v_des']); ?>"

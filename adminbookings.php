@@ -415,52 +415,6 @@ $result = $stmt->get_result();
         </div>
     </div>
 </body>
-<script>
-document.querySelectorAll('.update-form').forEach(form => {
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const formData = new FormData(this);
-        formData.append('csrf_token', CSRF_TOKEN);
-        
-        fetch('adminitems.php', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.text())
-        .then(data => {
-            console.log('Success:', data);
-            alert('Updated successfully!');
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Update failed');
-        });
-    });
-});
-
-document.querySelectorAll('.delete-btn').forEach(btn => {
-    btn.addEventListener('click', function() {
-        if (!confirm('Are you sure?')) return;
-        
-        const id = this.dataset.id;
-        const type = this.dataset.type;
-
-        fetch(`adminitems.php?delete=${id}&type=${type}`, {
-            method: 'GET',
-            headers: {
-                'X-CSRF-Token': CSRF_TOKEN
-            }
-        })
-        .then(response => {
-            if (response.ok) {
-                this.closest('tr').remove();
-                alert('Deleted successfully!');
-            }
-        })
-        .catch(error => console.error('Error:', error));
-    });
-});
-</script>
 </html>
 
 <?php
