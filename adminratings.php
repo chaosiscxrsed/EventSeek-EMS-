@@ -83,7 +83,6 @@ $result = $stmt->get_result();
 <body>
     <div class="container">
         <h1> Manage Customer Ratings</h1>
-        
         <?php if (isset($_SESSION['success_message'])): ?>
             <div class="alert alert-success">
                 <?php echo $_SESSION['success_message']; unset($_SESSION['success_message']); ?>
@@ -150,7 +149,7 @@ $result = $stmt->get_result();
                             <form method="POST" action="adminratings.php" onsubmit="return confirm('Are you sure you want to delete this rating?');">
                                 <input type="hidden" name="rating_id" value="<?php echo $row['rating_id']; ?>">
                                 <button type="submit" name="delete_rating" class="btn btn-danger">
-                                    <i class="fas fa-trash"></i> Delete
+                                 Delete
                                 </button>
                             </form>
                         </td>

@@ -1,3 +1,4 @@
+<!-- employee.php -->
 <?php
 session_start();
 if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
@@ -18,7 +19,7 @@ $users = $conn->query("SELECT * FROM employee");
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Manage Users</title>
+    <title>Manage Employee</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="admin.css">
@@ -49,25 +50,30 @@ $users = $conn->query("SELECT * FROM employee");
             <td><?= htmlspecialchars($row['emp_email']); ?></td>
             <td class="actions">
                 <a href="adminedituser.php?id=<?= $row['emp_id']; ?>"><button>Edit</button></a>
-                <a href="deleteuser.php?id=<?= $row['emp_id']; ?>"><button class="delete">Delete</button></a>
+                <a href="deleteemp.php?id=<?= $row['emp_id']; ?>"><button class="delete">Delete</button></a>
             </td>
         </tr>
         <?php endwhile; ?>
     </table>
 </div>
 <div style="text-align: right; margin-top: 20px;">
-    <a href="admindb.php" style="
+    <a href="admindb.php" class="back-btn" style="
+    float:left !important; 
+    margin-left:20px;">
+     Back to Dashboard</a>
+    <a href="addemployee.php" style="
         display: inline-block;
+        float: right;
         padding: 10px 20px;
-        background-color: #4CAF50;
+        background-color:rgb(226, 217, 35);
         color: white;
         text-decoration: none;
         border-radius: 5px;
         font-weight: bold;
         transition: background-color 0.3s;
-        margin-right: 20px;
-    " onmouseover="this.style.backgroundColor='#45a049'" onmouseout="this.style.backgroundColor='#4CAF50'">
-        Back to Admin Dashboard
+        margin:20px;
+        " onmouseover="this.style.backgroundColor='rgb(190, 219, 45)'" onmouseout="this.style.backgroundColor='rgb(226, 217, 35)'">
+        Add Employee
     </a>
 </div>
 </body>
