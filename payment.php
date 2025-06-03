@@ -94,7 +94,8 @@
                 </div>
                 <div class="info">
                 <p>Scan the QR code to make your payment.</p>
-                <p style="font-weight: bold">Please mention your name and booking ID in the remarks section of the payment.</p>
+                <p><strong>Note: Please mention your name, booking ID and any other info in the remarks section of the payment.</strong></p>
+                <p><strong>20% of payment will not be refunded if cancelled.</strong></p>
                 <p>For more inquiries, contact us at 9841234567 or email us at eventseek@gmail.com</p>
                 </div>
                 <a href="bookings.php" class="btn-back">

@@ -90,13 +90,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <a href="adminusers.php" style="
             display: inline-block;
             padding: 10px 20px;
-            background-color: #4CAF50;
+            background-color: #2e9c1d;
             color: white;
             text-decoration: none;
             border-radius: 5px;
             font-weight: bold;
             transition: background-color 0.3s;
-        " onmouseover="this.style.backgroundColor='#45a049'" onmouseout="this.style.backgroundColor='#4CAF50'">
+        " onmouseover="this.style.backgroundColor='rgb(48, 130, 52)'" onmouseout="this.style.backgroundColor='#2e9c1d'">
             Back to User List
         </a>
     </div>

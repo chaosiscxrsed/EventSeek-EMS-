@@ -100,7 +100,6 @@ if (isset($_GET['delete']) && isset($_GET['type'])) {
         if ($currentImage && file_exists($currentImage)) {
             unlink($currentImage);
         }
-
         $stmt = $conn->prepare("DELETE FROM `$type` WHERE `$idField` = ?");
         $stmt->bind_param("i", $id);
         $stmt->execute();
@@ -205,7 +204,7 @@ if (isset($_POST['update_item'])) {
             font-weight: bold;
             transition: background-color 0.3s;
             margin:20px;
-            " onmouseover="this.style.backgroundColor='#45a049'" onmouseout="this.style.backgroundColor='#4CAF50'">
+            " onmouseover="this.style.backgroundColor='rgb(194, 53, 43)'" onmouseout="this.style.backgroundColor='#f44336'">
             Logout
         </a>
     <h2>Upload New Item</h2>

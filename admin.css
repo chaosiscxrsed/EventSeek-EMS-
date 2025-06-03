@@ -8,7 +8,7 @@
 
 :root {
     --primary-color: #e0568d;
-    --secondary-color: #4CAF50;
+    --secondary-color: #2e9c1d;
     --danger-color: #dc3545;
     --warning-color: #ffc107;
     --info-color: #17a2b8;
@@ -35,7 +35,7 @@ body {
 }
 
 .dashboard-button button {
-    background-color: #4CAF50;
+    background-color: #2e9c1d;
     color: white;
     font-weight: bold;
     padding: 15px 30px;
@@ -47,7 +47,7 @@ body {
 }
 
 .dashboard-button button:hover {
-    background-color: #45a049;
+    background-color: rgb(48, 130, 52);
 }
 
 h1 {
@@ -119,7 +119,7 @@ img:hover {
 }
 
 .actions button {
-    background: #4CAF50;
+    background: #2e9c1d;
     color: white;
     padding: 6px 12px;
     border: none;
@@ -142,6 +142,10 @@ img:hover {
     margin: 10px;
 }
 
+button.delete:hover {
+    background-color: rgb(201, 72, 63);
+}
+
 form {
     margin-top: 20px;
     display: flex;
@@ -161,13 +165,14 @@ form button {
 }
 
 form button {
-    background-color: #4CAF50;
+    background-color: #2e9c1d;
     color: white;
     font-weight: bold;
+    transition: background-color 0.3s
 }
 
 form button:hover {
-    background-color: #45a049;
+    background-color: rgb(48, 130, 52);
 }
 
 .message {
@@ -176,25 +181,16 @@ form button:hover {
     width: fit-content;
     background: #e7f7e7;
     border: 1px solid #d6f7d6;
-    color: #4caf50;
+    color: #2e9c1d;
     text-align: center;
     border-radius: 8px;
+    transition: background-color 0.3s
 }
 
 .message.error {
     background: #fddddd;
     border: 1px solid #f5c2c2;
     color: #f44336;
-}
-
-td.status-ended {
-    color: red;
-    font-weight: bold;
-}
-
-td.status-waiting {
-    color: green;
-    font-weight: bold;
 }
 
 .container {
@@ -383,7 +379,7 @@ select {
 }
 
 .back-btn:hover {
-    background-color: #45a049;
+    background-color: rgb(48, 130, 52);
     color: white;
 }
 

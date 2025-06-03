@@ -44,13 +44,13 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
             margin-top: 20px;
             border-radius: 8px;
             border: 1px solid #ccc;
-            background-color: #4CAF50;
+            background-color: #2e9c1d;
             color: white;
             font-weight: bold;
         }
 
         button:hover {
-            background-color: #45a049;
+            background-color:rgb(48, 130, 52);
         }
     </style>
 </head>

@@ -486,11 +486,9 @@ $result = $stmt->get_result();
                         </div>
                     </div>
 
-                    
-                    
                     <div class="booking-actions">
                         <?php if ($status === 'Pending'|| $status==='Confirmed'|| $status === 'pending'|| $status==='confirmed'): ?>
-                            <a class="btn-receipt"> 20% of payment will not be refunded if cancelled</a>
+                            <a class="btn-receipt">Please make the payment 3 days before the event date</a>
                             <?php if ($status === 'Pending' || $status === 'pending'): ?>
                             <a href="payment.php" class="btn-pay">
                              Pay with eSewa
