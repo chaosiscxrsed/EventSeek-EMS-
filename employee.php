@@ -49,7 +49,7 @@ $users = $conn->query("SELECT * FROM employee");
             <td><?= htmlspecialchars($row['emp_address']); ?></td>
             <td><?= htmlspecialchars($row['emp_email']); ?></td>
             <td class="actions">
-                <a href="adminedituser.php?id=<?= $row['emp_id']; ?>"><button>Edit</button></a>
+                <a href="editemployee.php?id=<?= $row['emp_id']; ?>"><button>Edit</button></a>
                 <a href="deleteemp.php?id=<?= $row['emp_id']; ?>"><button class="delete">Delete</button></a>
             </td>
         </tr>
