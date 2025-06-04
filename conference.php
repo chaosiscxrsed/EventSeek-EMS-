@@ -70,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_selection']))
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Choose Decorations | EventSeek</title>
+    <title> Decorations | EventSeek</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Gaegu&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="ems.css">
@@ -194,7 +194,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_selection']))
         <input type="hidden" id="selected-event-date" name="event_date">
         
         <section class="section" id="lightings">
-            <h2>Choose Stage Lights</h2>
+            <h2> Stage Lights</h2>
             <div class="scroll-container">
                 <?php
                 $result = $conn->query("SELECT * FROM lighting");
@@ -221,7 +221,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_selection']))
         </section>
 
         <section class="section" id="tabledecs">
-            <h2>Choose Table</h2>
+            <h2> Table</h2>
             <div class="scroll-container">
                 <?php
                 $result = $conn->query("SELECT * FROM tabledec");
@@ -248,7 +248,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_selection']))
         </section>
 
         <section class="section" id="cardboards">
-            <h2>Choose Cardboard</h2>
+            <h2> Cardboard</h2>
             <div class="scroll-container">
                 <?php
                 $result = $conn->query("SELECT * FROM cardboard");
@@ -275,7 +275,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_selection']))
         </section>
 
         <section class="section" id="venues">
-            <h2>Choose Venue</h2>
+            <h2> Venue</h2>
             <div class="scroll-container">
                 <?php
                 $result = $conn->query("SELECT * FROM venue");
