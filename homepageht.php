@@ -79,7 +79,7 @@
             <div class="card">
             <a href="artex.php"><img src="artt.jpeg" alt="Art exhibition" style="width:100%; height:200px; object-fit:cover;"></a>
                 <div class="card-content">
-                    <a href="decoration.php"><h3>Art Exhibition</h3></a>
+                    <a href="artex.php"><h3>Art Exhibition</h3></a>
                     <div class="line"></div>
                 </div>
             </div>
@@ -94,10 +94,11 @@
     </div>
    
     <section id="profile" class="section">
-        <h2>My Profile</h2>
-        <p>Name: <?php echo $user_name; ?></p>
-        <p>Email: <?php echo htmlspecialchars($_SESSION['user_email']); ?></p>
-        <button onclick="window.location.href='editprofile.php'">Edit Profile</button>
+    <h2>My Profile</h2>
+    <p><strong>Name:</strong> <?php echo $user_name; ?></p>
+    <p><strong>Contact:</strong> <?php echo isset($_SESSION['user_contact']) ? htmlspecialchars($_SESSION['user_contact']) : 'Not provided'; ?></p>
+    <p><strong>Email:</strong> <?php echo isset($_SESSION['user_email']) ? htmlspecialchars($_SESSION['user_email']) : 'Not provided'; ?></p>
+    <button onclick="window.location.href='editprofile.php'">Edit Profile</button>
     </section>
 
     <footer class="footer">

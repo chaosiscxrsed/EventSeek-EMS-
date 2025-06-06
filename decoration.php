@@ -182,7 +182,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_selection']))
     </section>
 
     <form method="post" action="decoration.php">
-        <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
+        <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
         <input type="hidden" id="selected-flower" name="flower_id">
         <input type="hidden" id="selected-entrance" name="entrance_id">
         <input type="hidden" id="selected-cardboard" name="cardboard_id">
@@ -311,7 +311,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_selection']))
 
             <div class="date-picker">
                 <label for="event_date">Select Event Date:</label>
-                <input type="date" id="event_date" name= "event_date"vrequired min="<?php echo date('Y-m-d'); ?>">
+                <input type="date" id="event_date" name= "event_date" required min="<?php echo date('Y-m-d'); ?>">
             </div>
 
             <button type="submit" name="confirm_selection" class="btn-confirm">Confirm Booking</button>
