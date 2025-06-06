@@ -181,7 +181,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_selection']))
     </section>
 
     <form method="post" action="artex.php">
-        <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
+       <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
         <input type="hidden" id="selected-roomlight" name="roomlight_id">
         <input type="hidden" id="selected-prop" name="prop_id">
         <input type="hidden" id="selected-cardboard" name="cardboard_id">
