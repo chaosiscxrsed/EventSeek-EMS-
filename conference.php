@@ -1,4 +1,3 @@
-<!-- conference.php -->
 <?php
 session_start();
 $conn = new mysqli('localhost', 'root', '', 'ems');
@@ -19,6 +18,8 @@ $selected_items = [
     'cardboard' => null,
     'venue' => null
 ];
+
+$selected_date = isset($_POST['event_date']) ? $_POST['event_date'] : '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_selection'])) {
     $lighting_id = isset($_POST['lighting']) ? intval($_POST['lighting']) : null;
@@ -44,24 +45,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_selection']))
         
         $error_message = "Please select: " . implode(", ", $missing);
     } else {
-        // Fetch prices
-        $lighting_price = $conn->query("SELECT l_price FROM lighting WHERE l_id = $lighting_id")->fetch_assoc()['l_price'];
-        $tabledec_price = $conn->query("SELECT t_price FROM tabledec WHERE t_id = $tabledec_id")->fetch_assoc()['t_price'];
-        $cardboard_price = $conn->query("SELECT c_price FROM cardboard WHERE c_id = $cardboard_id")->fetch_assoc()['c_price'];
-        $venue_price = $conn->query("SELECT v_price FROM venue WHERE v_id = $venue_id")->fetch_assoc()['v_price'];
+        // Check venue availability
+        $venue_check_sql = "SELECT v_id FROM (
+            SELECT v_id, event_date FROM userselect WHERE event_date = ? AND v_id = ?
+            UNION ALL
+            SELECT v_id, event_date FROM artselect WHERE event_date = ? AND v_id = ?
+            UNION ALL
+            SELECT v_id, event_date FROM confselect WHERE event_date = ? AND v_id = ?
+        ) AS all_bookings";
 
-        $total_price = $lighting_price + $tabledec_price + $cardboard_price + $venue_price;
-
-        $stmt = $conn->prepare("INSERT INTO confselect (u_id, l_id, t_id, c_id, v_id, booking_date, event_date, total_price) VALUES (?, ?, ?, ?, ?, NOW(), ?, ?)");
-        $stmt->bind_param("iiiiisd", $_SESSION['user_id'], $lighting_id, $tabledec_id, $cardboard_id, $venue_id, $event_date, $total_price);
-
-        if ($stmt->execute()) {
-            header("Location: bookings.php");
-            exit();
+        $stmt_check = $conn->prepare($venue_check_sql);
+        $stmt_check->bind_param("sisisi", $event_date, $venue_id, $event_date, $venue_id, $event_date, $venue_id);
+        $stmt_check->execute();
+        $result_check = $stmt_check->get_result();
+        
+        if ($result_check->num_rows > 0) {
+            $error_message = "This venue is already booked for your selected date. Please choose another date or venue.";
         } else {
-            $error_message = "Error saving your booking: " . $conn->error;
+            $lighting_price = $conn->query("SELECT l_price FROM lighting WHERE l_id = $lighting_id")->fetch_assoc()['l_price'];
+            $tabledec_price = $conn->query("SELECT t_price FROM tabledec WHERE t_id = $tabledec_id")->fetch_assoc()['t_price'];
+            $cardboard_price = $conn->query("SELECT c_price FROM cardboard WHERE c_id = $cardboard_id")->fetch_assoc()['c_price'];
+            $venue_price = $conn->query("SELECT v_price FROM venue WHERE v_id = $venue_id")->fetch_assoc()['v_price'];
+
+            $total_price = $lighting_price + $tabledec_price + $cardboard_price + $venue_price;
+
+            $stmt = $conn->prepare("INSERT INTO confselect (u_id, l_id, t_id, c_id, v_id, booking_date, event_date, total_price) VALUES (?, ?, ?, ?, ?, NOW(), ?, ?)");
+            $stmt->bind_param("iiiiisd", $_SESSION['user_id'], $lighting_id, $tabledec_id, $cardboard_id, $venue_id, $event_date, $total_price);
+
+            if ($stmt->execute()) {
+                $_SESSION['booking_success'] = true;
+                header("Location: bookings.php");
+                exit();
+            } else {
+                $error_message = "Error saving your booking: " . $conn->error;
+            }
+            $stmt->close();
         }
-        $stmt->close();
+        $stmt_check->close();
     }
 }
 ?>
@@ -70,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_selection']))
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Decorations | EventSeek</title>
+    <title>Conference Decorations | EventSeek</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Gaegu&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="ems.css">
@@ -83,6 +103,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_selection']))
             overflow: hidden;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             margin: 0 15px;
+            transition: all 0.3s ease;
+        }
+
+        .card.unavailable {
+            opacity: 0.6;
+            border: 2px solid #ffcccc;
+            position: relative;
+        }
+
+        .card.unavailable::after {
+            content: "Booked";
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ff4757;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
         }
 
         .card img {
@@ -93,11 +132,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_selection']))
 
         .card-content {
             padding: 15px;
-        }
-
-        .card h3 {
-            color: #e0568d;
-            margin: 10px 0 5px;
         }
 
         #selected-items {
@@ -114,44 +148,74 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_selection']))
             border-radius: 8px;
         }
 
-        .date-picker label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: #e0568d;
-        }
-
-        .date-picker input[type="date"] {
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-family: 'Poppins', sans-serif;
-            width: 100%;
-            max-width: 300px;
-        }
-
         .error-message {
             color: red;
             margin-bottom: 15px;
-        }     
+            padding: 10px;
+            background: #ffebee;
+            border-radius: 4px;
+        }
+
+        .success-message {
+            color: green;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #e8f5e9;
+            border-radius: 4px;
+        }
+
+        .scroll-container {
+            display: flex;
+            overflow-x: auto;
+            padding: 15px 0;
+            gap: 15px;
+        }
+
+        .btn-confirm {
+            background: #e0568d;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s;
+        }
+
+        .btn-confirm:hover {
+            background: #c04a77;
+            transform: translateY(-2px);
+        }
+
+        .message-container {
+            display: none;
+            margin: 20px 0;
+        }
+        
+        .visible {
+            display: block;
+        }
+        
+        #confirmation {
+            scroll-margin-top: 100px;
+        }
     </style>
-   
 </head>
 <body>
     <div class="header-nav-container">
         <header>
-           <div class="logo-heading">
+            <div class="logo-heading">
                 <a href="homepageht.php">
                     <img src="logo.png" alt="EventSeek Logo" class="logo">
                 </a>
                 <h1><a href="homepageht.php" style="color: #fcfdfd">EventSeek</a></h1>
             </div>
         </header>
-            <nav>
-                <a href="#contact" id="contact-link">Contact</a>
-                <a href="#about" id="about-link">About Us</a>
-                <button id="open-dashboard" class="dashboard-btn">☰</button>
-            </nav>
+        <nav>
+            <a href="#contact" id="contact-link">Contact</a>
+            <a href="#about" id="about-link">About Us</a>
+            <button id="open-dashboard" class="dashboard-btn">☰</button>
+        </nav>
     </div>
 
     <div id="dashboard" class="dashboard">
@@ -183,18 +247,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_selection']))
 
     <section class="hero">
         <h1>Let's Choose Decorations</h1>
-    </section>
-
-    <form method="post" action="conference.php">
+    </section>      
+    <form method="post" action="conference.php#confirmation" id="booking-form">
+        <section class="section" id="confirmation">
+        <div class="date-picker">
+            <label for="event_date">Select Event Date:</label>
+            <input type="date" id="event_date" name="event_date" required 
+                   min="<?php echo date('Y-m-d'); ?>" 
+                   value="<?php echo htmlspecialchars($selected_date); ?>">
+        </div> 
+        </section>
         <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
-        <input type="hidden" id="selected-lighting" name="lighting_id">
-        <input type="hidden" id="selected-tabledec" name="tabledec_id">
-        <input type="hidden" id="selected-cardboard" name="cardboard_id">
-        <input type="hidden" id="selected-venue" name="venue_id">
-        <input type="hidden" id="selected-event-date" name="event_date">
         
+        <div id="message-container" class="message-container <?php echo (!empty($error_message) || (!empty($success_message))) ? 'visible' : ''; ?>">
+            <?php if (!empty($error_message)): ?>
+                <div class="error-message"><?php echo $error_message; ?></div>
+            <?php endif; ?>
+            <?php if (!empty($success_message)): ?>
+                <div class="success-message"><?php echo $success_message; ?></div>
+            <?php endif; ?>
+        </div>
+
         <section class="section" id="lightings">
-            <h2> Stage Lights</h2>
+            <h2>Stage Lighting</h2>
             <div class="scroll-container">
                 <?php
                 $result = $conn->query("SELECT * FROM lighting");
@@ -202,26 +277,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_selection']))
                     while ($row = $result->fetch_assoc()):
                 ?>
                 <div class="card">
-                    <img src="<?php echo htmlspecialchars($row['l_image']); ?>" alt="lighting">
+                    <img src="<?php echo htmlspecialchars($row['l_image']); ?>" alt="Lighting">
                     <div class="card-content">
                         <p><strong><?php echo htmlspecialchars($row['l_des']); ?></strong></p>
                         <p style="color:#5a5a5c;">Rs. <?php echo number_format($row['l_price'], 2); ?></p>
                         <label>
                             <input type="radio" name="lighting" value="<?php echo $row['l_id']; ?>"
                                 data-description="<?php echo htmlspecialchars($row['l_des']); ?>"
-                                data-price="<?php echo $row['l_price']; ?>">
+                                data-price="<?php echo $row['l_price']; ?>"
+                                <?php echo ($selected_items['lighting'] == $row['l_id']) ? 'checked' : ''; ?>>
                             Select
                         </label>
                     </div>
                 </div>
                 <?php endwhile; else: ?>
-                    <p>No stage lights available</p>
+                    <p>No lighting options available</p>
                 <?php endif; ?>
             </div>
         </section>
 
         <section class="section" id="tabledecs">
-            <h2> Table</h2>
+            <h2>Table Decorations</h2>
             <div class="scroll-container">
                 <?php
                 $result = $conn->query("SELECT * FROM tabledec");
@@ -229,26 +305,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_selection']))
                     while ($row = $result->fetch_assoc()):
                 ?>
                 <div class="card">
-                    <img src="<?php echo htmlspecialchars($row['t_image']); ?>" alt="tabledec">
+                    <img src="<?php echo htmlspecialchars($row['t_image']); ?>" alt="Table Decoration">
                     <div class="card-content">
                         <p><strong><?php echo htmlspecialchars($row['t_des']); ?></strong></p>
                         <p style="color:#5a5a5c;">Rs. <?php echo number_format($row['t_price'], 2); ?></p>
                         <label>
                             <input type="radio" name="tabledec" value="<?php echo $row['t_id']; ?>"
                                 data-description="<?php echo htmlspecialchars($row['t_des']); ?>"
-                                data-price="<?php echo $row['t_price']; ?>">
+                                data-price="<?php echo $row['t_price']; ?>"
+                                <?php echo ($selected_items['tabledec'] == $row['t_id']) ? 'checked' : ''; ?>>
                             Select
                         </label>
                     </div>
                 </div>
                 <?php endwhile; else: ?>
-                    <p>No tabledecs available</p>
+                    <p>No table decorations available</p>
                 <?php endif; ?>
             </div>
         </section>
 
         <section class="section" id="cardboards">
-            <h2> Cardboard</h2>
+            <h2>Display Cardboards</h2>
             <div class="scroll-container">
                 <?php
                 $result = $conn->query("SELECT * FROM cardboard");
@@ -263,36 +340,60 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_selection']))
                         <label>
                             <input type="radio" name="cardboard" value="<?php echo $row['c_id']; ?>"
                                 data-description="<?php echo htmlspecialchars($row['c_des']); ?>"
-                                data-price="<?php echo $row['c_price']; ?>">
+                                data-price="<?php echo $row['c_price']; ?>"
+                                <?php echo ($selected_items['cardboard'] == $row['c_id']) ? 'checked' : ''; ?>>
                             Select
                         </label>
                     </div>
                 </div>
                 <?php endwhile; else: ?>
-                    <p>No cardboards available</p>
+                    <p>No cardboard displays available</p>
                 <?php endif; ?>
             </div>
         </section>
 
         <section class="section" id="venues">
-            <h2> Venue</h2>
+            <h2>Venue Selection</h2>
             <div class="scroll-container">
                 <?php
                 $result = $conn->query("SELECT * FROM venue");
                 if ($result && $result->num_rows > 0):
                     while ($row = $result->fetch_assoc()):
+                        // Check availability for each venue
+                        $is_available = true;
+                        if (!empty($selected_date)) {
+                            $check_sql = "SELECT v_id FROM (
+                                SELECT v_id, event_date FROM userselect WHERE event_date = ? AND v_id = ?
+                                UNION ALL
+                                SELECT v_id, event_date FROM artselect WHERE event_date = ? AND v_id = ?
+                                UNION ALL
+                                SELECT v_id, event_date FROM confselect WHERE event_date = ? AND v_id = ?
+                            ) AS all_bookings";
+                            
+                            $stmt_check = $conn->prepare($check_sql);
+                            $stmt_check->bind_param("sisisi", $selected_date, $row['v_id'], $selected_date, $row['v_id'], $selected_date, $row['v_id']);
+                            $stmt_check->execute();
+                            $result_check = $stmt_check->get_result();
+                            $is_available = $result_check->num_rows === 0;
+                            $stmt_check->close();
+                        }
                 ?>
-                <div class="card">
+                <div class="card <?php echo !$is_available ? 'unavailable' : ''; ?>">
                     <img src="<?php echo htmlspecialchars($row['v_image']); ?>" alt="Venue">
                     <div class="card-content">
                         <p><strong><?php echo htmlspecialchars($row['v_des']); ?></strong></p>
                         <p style="color:#5a5a5c;">Rs. <?php echo number_format($row['v_price'], 2); ?></p>
-                        <label>
-                            <input type="radio" name="venue" value="<?php echo $row['v_id']; ?>"
-                                data-description="<?php echo htmlspecialchars($row['v_des']); ?>"
-                                data-price="<?php echo $row['v_price']; ?>">
-                            Select
-                        </label>
+                        <?php if ($is_available): ?>
+                            <label>
+                                <input type="radio" name="venue" value="<?php echo $row['v_id']; ?>"
+                                    data-description="<?php echo htmlspecialchars($row['v_des']); ?>"
+                                    data-price="<?php echo $row['v_price']; ?>"
+                                    <?php echo ($selected_items['venue'] == $row['v_id']) ? 'checked' : ''; ?>>
+                                Select
+                            </label>
+                        <?php else: ?>
+                            <p style="color:red; font-size:0.9em;">Unavailable on selected date</p>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <?php endwhile; else: ?>
@@ -302,27 +403,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_selection']))
         </section>
 
         <section class="section" id="confirmation">
-            <h2>Your Selections:</h2>
-            <?php if (isset($success_message)): ?>
-                <div class="success-message"><?php echo $success_message; ?></div>
-            <?php endif; ?>
-            <?php if (isset($error_message)): ?>
-                <div class="error-message"><?php echo $error_message; ?></div>
-            <?php endif; ?>
-
+            <h2>Your Selections</h2>
             <div id="selected-items">
                 <p>No items selected yet</p>
             </div>
-
-            <div class="date-picker">
-                <label for="event_date">Select Event Date:</label>
-                <input type="date" id="event_date" name= "event_date"vrequired min="<?php echo date('Y-m-d'); ?>">
-            </div>
-
             <button type="submit" name="confirm_selection" class="btn-confirm">Confirm Booking</button>
         </section>
-        
     </form>
+
     <footer class="footer">
         <div class="footer-column">
             <h3>About Us</h3>
@@ -334,7 +422,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_selection']))
             <h3>Get In Touch</h3>
             <ul>
                 <li>eventseek@gmail.com</li>
-                 <li>9812345678</li>
+                <li>9812345678</li>
             </ul>
             <a href="https://www.instagram.com/eventseek/" target="_blank" style="text-decoration: none;">More Ways to Get In Touch</a>
         </div>
@@ -348,8 +436,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_selection']))
             <a href="https://maps.app.goo.gl/zQZrZFiRTHoZRPTy7" target="_blank" style="text-decoration: none;">Direction and Maps</a>
         </div>
     </footer>
-<script>
+
+    <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // Show messages if they exist
+        const messageContainer = document.getElementById('message-container');
+        if (messageContainer.querySelector('.error-message') || messageContainer.querySelector('.success-message')) {
+            messageContainer.classList.add('visible');
+            
+            // Scroll to messages if they exist
+            setTimeout(() => {
+                messageContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        }
+
+        // Update selected items display
         function updateSelectedItems() {
             const selected = {
                 lighting: document.querySelector('input[name="lighting"]:checked'),
@@ -363,13 +464,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_selection']))
             let allSelected = true;
             
             if (selected.lighting) {
-                html += `<li>lighting: ${selected.lighting.dataset.description} (Rs. ${selected.lighting.dataset.price})</li>`;
+                html += `<li>Lighting: ${selected.lighting.dataset.description} (Rs. ${selected.lighting.dataset.price})</li>`;
             } else {
                 allSelected = false;
             }
             
             if (selected.tabledec) {
-                html += `<li>tabledec: ${selected.tabledec.dataset.description} (Rs. ${selected.tabledec.dataset.price})</li>`;
+                html += `<li>Table Decoration: ${selected.tabledec.dataset.description} (Rs. ${selected.tabledec.dataset.price})</li>`;
             } else {
                 allSelected = false;
             }
@@ -401,14 +502,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_selection']))
             document.getElementById('selected-items').innerHTML = html;
         }
 
+        // Update when any radio button changes
         document.querySelectorAll('input[type="radio"]').forEach(radio => {
             radio.addEventListener('change', updateSelectedItems);
         });
         
-        document.getElementById('event_date').addEventListener('change', updateSelectedItems);
-        updateSelectedItems();
-
-        <?php if ($error_message): ?>
+        // Update when date changes
+        document.getElementById('event_date').addEventListener('change', function() {
+            this.form.submit();
+        });
+        
+        // Highlight missing selections if there was an error
+        <?php if (!empty($error_message)): ?>
             const missing = "<?php echo addslashes($error_message); ?>".replace('Please select: ', '').split(', ');
             missing.forEach(field => {
                 if (field === 'event date') {
@@ -421,9 +526,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_selection']))
                 }
             });
         <?php endif; ?>
+        
+        // Initialize selected items display
+        updateSelectedItems();
     });
-</script>
+    </script>
 </body>
 </html>
-</body>
-</html>
+<?php
+$conn->close();
+?>
