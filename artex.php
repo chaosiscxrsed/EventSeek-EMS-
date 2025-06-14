@@ -45,7 +45,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_selection']))
         
         $error_message = "Please select: " . implode(", ", $missing);
     } else {
-        // Check venue availability
         $venue_check_sql = "SELECT v_id FROM (
             SELECT v_id, event_date FROM userselect WHERE event_date = ? AND v_id = ?
             UNION ALL
@@ -359,7 +358,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_selection']))
                 $result = $conn->query("SELECT * FROM venue");
                 if ($result && $result->num_rows > 0):
                     while ($row = $result->fetch_assoc()):
-                        // Check availability for each venue
                         $is_available = true;
                         if (!empty($selected_date)) {
                             $check_sql = "SELECT v_id FROM (
@@ -439,18 +437,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_selection']))
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Show messages if they exist
         const messageContainer = document.getElementById('message-container');
         if (messageContainer.querySelector('.error-message') || messageContainer.querySelector('.success-message')) {
             messageContainer.classList.add('visible');
-            
-            // Scroll to messages if they exist
             setTimeout(() => {
                 messageContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }, 100);
         }
 
-        // Update selected items display
         function updateSelectedItems() {
             const selected = {
                 roomlight: document.querySelector('input[name="roomlight"]:checked'),
@@ -501,18 +495,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_selection']))
             
             document.getElementById('selected-items').innerHTML = html;
         }
-
-        // Update when any radio button changes
         document.querySelectorAll('input[type="radio"]').forEach(radio => {
             radio.addEventListener('change', updateSelectedItems);
         });
-        
-        // Update when date changes
         document.getElementById('event_date').addEventListener('change', function() {
             this.form.submit();
         });
-        
-        // Highlight missing selections if there was an error
         <?php if (!empty($error_message)): ?>
             const missing = "<?php echo addslashes($error_message); ?>".replace('Please select: ', '').split(', ');
             missing.forEach(field => {
@@ -526,8 +514,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_selection']))
                 }
             });
         <?php endif; ?>
-        
-        // Initialize selected items display
         updateSelectedItems();
     });
     </script>
